@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  #Define the number of nodes to spin up
+  N = 2
+
+  #Iterate over nodes
+  (1..N).each do |node_id|
+    nid = (node_id - 1)
+
+    config.vm.define "node#{nid}" do |node|
+      node.vm.box = "jborean93/WindowsServer2022"
+      # Box default is 2GB, increase here if necessary
+      # node.vm.provider "libvirt" do |vb|
+      #   vb.memory = "4096"
+      # end
+      node.vm.hostname = "node#{nid}"
+    end
+
+  end
+end
+
