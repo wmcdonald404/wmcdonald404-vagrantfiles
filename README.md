@@ -5,18 +5,21 @@ Some simple starter Vagrantfiles, mostly targeting the libvirt provider.
 ```
 
 .
-├── bento                           # Ubuntu Vagrantfiles)
+├── bento                           # Ubuntu Vagrantfiles
 │   └── ubuntu-24.04                    # 24.04, LTS
-├── debian                          # Debian Vagrantfiles)
+├── debian                          # Debian Vagrantfiles
 │   └── bookworm64                      # Debian 12.7
-├── fedora                          # Fedora Vagrantfiles)
+├── fedora                          # Fedora Vagrantfiles
 │   ├── fedora30                        # Fedora 30
 │   ├── fedora39                        # Fedora 39
 │   ├── fedora40                        # Fedora 40
 │   ├── fedora40-ansible                # Fedora 40, single VM, Ansible provisioner
 │   ├── fedora40-multivm                # Fedora 40, multi VM, no provisioner   
 │   └── fedora40-multivm-ansible        # Fedora 40, multi VM, Ansible provisioner
-└── jborean93                       # (Windows Vagrantfiles)
+├── generic                         # roboxes.org generic Vagrantfiles
+│   ├── ubuntu-20.04                    # Ubuntu 20.04
+│   └── ubuntu-22.04                    # Ubuntu 22.04
+└── jborean93                       # Windows Vagrantfiles
     ├── windows2022                     # Windows 2022, single VM
     ├── windows2022-multidisk           # Windows 2022, single VM, multiple block devices
     └── windows2022-multivm             # Windows 2022, multi VM
