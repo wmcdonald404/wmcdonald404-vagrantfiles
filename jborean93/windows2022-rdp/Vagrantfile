@@ -1,0 +1,14 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# enable RDP on the Vagrant box
+$cloudinit = <<'EOF'
+Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0
+Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+EOF
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "jborean93/WindowsServer2022"
+  config.vm.provision "shell", inline: $cloudinit
+end
+
