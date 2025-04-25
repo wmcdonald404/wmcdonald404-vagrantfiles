@@ -1,0 +1,12 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "jborean93/WindowsServer2022"
+  config.vm.provision "shell", 
+    name: "Active Directory Domain Controller Setup",
+    path: "addc.ps1",
+    reboot: "true"
+    
+end
+
