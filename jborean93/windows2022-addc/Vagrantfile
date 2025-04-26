@@ -5,8 +5,8 @@ Vagrant.configure("2") do |config|
   config.vm.box = "jborean93/WindowsServer2022"
   config.vm.provision "shell", 
     name: "Active Directory Domain Controller Setup",
-    path: "./scripts/powershell/createdomaincontroller.ps1",
-    reboot: "true"
+    path: "./scripts/powershell/createdomaincontroller.ps1"
+    # reboot: "true"
   config.vm.provision "shell", 
     name: "Create Active Directory Security Groups",
     path: "./scripts/powershell/createsecuritygroups.ps1"

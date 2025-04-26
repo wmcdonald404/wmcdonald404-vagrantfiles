@@ -7,7 +7,6 @@ $SecurityGroups = @(
         DisplayName = "Bridge Officers"
         Description = "Members of Bridge Officers"
     }
-
     @{
         Name = "Engineers" 
         SamAccountName = "Engineers" 
@@ -18,7 +17,17 @@ $SecurityGroups = @(
     }
 )
 
-$SecurityGroups | foreach { New-ADGroup @_ }
+$SecurityGroups | foreach { 
+    if (Get-ADGroup $_.Name)
+    {
+        $Name = $_.Name
+        Write-Output "Active Directory Security Group already exists: $Name"  
+    }
+    else
+    {
+        New-ADGroup @_ 
+    }
+}
 
 # If we start to structure using OUs include the Path
 # Path = "CN=Users,DC=Nostromo,DC=Com"

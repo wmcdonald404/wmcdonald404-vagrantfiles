@@ -9,9 +9,8 @@ $Users = @(
         DisplayName = "Captain Dallas"
         Office = "Bridge"
         # This is a Vagrant box, *please* don't do this near real infrastructure :)
-        AccountPassword = ConvertTo-SecureString $Env:COMPUTERNAME -AsPlainText -Force
+        AccountPassword = ConvertTo-SecureString [Environment]::MachineName -AsPlainText -Force
     }
-
     @{
         Enabled = $true
         ChangePasswordAtLogon = $false
@@ -21,9 +20,8 @@ $Users = @(
         Surname = "Kane"
         DisplayName = "XO Kane"
         Office = "Bridge"
-        AccountPassword = ConvertTo-SecureString $Env:COMPUTERNAME -AsPlainText -Force
+        AccountPassword = ConvertTo-SecureString [Environment]::MachineName -AsPlainText -Force
     }
-
     @{
         Enabled = $true
         ChangePasswordAtLogon = $false
@@ -33,13 +31,21 @@ $Users = @(
         Surname = "Parker"
         DisplayName = "Chief Parker"
         Office = "Engineering"
-        AccountPassword = ConvertTo-SecureString $Env:COMPUTERNAME -AsPlainText -Force
+        AccountPassword = ConvertTo-SecureString [Environment]::MachineName -AsPlainText -Force
     }
-
 )
 
-$Users | foreach { New-ADUser @_ }
-
+$Users | foreach { 
+    if (Get-ADUser $_.Name)
+    {
+        $Name = $_.Name
+        Write-Output "Active Directory Domain User already exists: $Name" 
+    }
+    else
+    {
+        New-ADUser @_ 
+    }
+}
 
 # PS> Add-ADGroupMember -Identity Officers -Members dallas, kane
 # PS> Add-ADGroupMember -Identity Engineers -Members parker
