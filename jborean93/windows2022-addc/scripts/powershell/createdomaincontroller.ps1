@@ -1,7 +1,7 @@
 # Windows PowerShell script for AD DS Deployment
 
 # Set a default SafeModeAdministratorPassword
-# This is a Vagrant box, please don't do this near real infrastructure :)
+# This is a Vagrant box, *please* don't do this near real infrastructure :)
 $Password = ConvertTo-SecureString $Env:COMPUTERNAME -AsPlainText -Force
 
 # Install the necessary feature and module for AD management
@@ -18,13 +18,14 @@ $Params = @{
     DomainMode = 'WinThreshold'
     DomainName = $Env:COMPUTERNAME.Replace("-",".")
     DomainNetbiosName = $Env:COMPUTERNAME.Split('-')[0].ToUpper()
+    Force = $true
     ForestMode = 'WinThreshold'
     InstallDns = $true
     LogPath = 'C:\Windows\NTDS'
     NoRebootOnCompletion = $true
     SafeModeAdministratorPassword = $Password
     SysvolPath = 'C:\Windows\SYSVOL'
-    Force = $true
+    WarningAction = 'Ignore'
 }
 
 Install-ADDSForest @Params

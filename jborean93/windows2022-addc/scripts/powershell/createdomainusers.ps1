@@ -8,7 +8,8 @@ $Users = @(
         Surname = "Dallas"
         DisplayName = "Captain Dallas"
         Office = "Bridge"
-        AccountPassword = "Thatfigures." | ConvertTo-SecureString -AsPlainText -Force
+        # This is a Vagrant box, *please* don't do this near real infrastructure :)
+        AccountPassword = ConvertTo-SecureString $Env:COMPUTERNAME -AsPlainText -Force
     }
 
     @{
@@ -20,7 +21,7 @@ $Users = @(
         Surname = "Kane"
         DisplayName = "XO Kane"
         Office = "Bridge"
-        AccountPassword = "Sillyquestion?" | ConvertTo-SecureString -AsPlainText -Force
+        AccountPassword = ConvertTo-SecureString $Env:COMPUTERNAME -AsPlainText -Force
     }
 
     @{
@@ -32,7 +33,7 @@ $Users = @(
         Surname = "Parker"
         DisplayName = "Chief Parker"
         Office = "Engineering"
-        AccountPassword = "Howyadoin?" | ConvertTo-SecureString -AsPlainText -Force
+        AccountPassword = ConvertTo-SecureString $Env:COMPUTERNAME -AsPlainText -Force
     }
 
 )
