@@ -1,19 +1,11 @@
 # Windows PowerShell script for AD DS Deployment
 
-if ([Environment]::MachineName -eq (Get-ADDomainController).Hostname.Split('.')[0])
-{
-    $Domain = (Get-ADDomainController).Domain
-    Write-Output "Already Domain Controller for Domain: $Domain" 
-}
-else
-{
+function Initialize-Domain {
+    Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
+    Import-Module ADDSDeployment
     # Set a default SafeModeAdministratorPassword
     # This is a Vagrant box, *please* don't do this near real infrastructure :)
     $Password = ConvertTo-SecureString [Environment]::MachineName -AsPlainText -Force
-
-    # Install the necessary feature and module for AD management
-    Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
-    Import-Module ADDSDeployment
 
     # Set our domain/subdomain.
     # Vagrant will assign a pseudo-random hostname, e.g.: WIN-A621GKNALNJ
@@ -29,12 +21,24 @@ else
         ForestMode = 'WinThreshold'
         InstallDns = $true
         LogPath = 'C:\Windows\NTDS'
-        NoRebootOnCompletion = $false
+        NoRebootOnCompletion = $true
         SafeModeAdministratorPassword = $Password
         SysvolPath = 'C:\Windows\SYSVOL'
         WarningAction = 'Ignore'
     }
 
     Install-ADDSForest @Params
-
 }
+
+try {
+    # if (Get-ADDomainController) {}
+    if ([Environment]::MachineName -eq (Get-ADDomainController).Hostname.Split('.')[0])
+    {
+        $Domain = (Get-ADDomainController).Domain
+        Write-Output "Already Domain Controller for Domain: $Domain" 
+    }
+} catch {
+    Initialize-Domain
+}
+
+

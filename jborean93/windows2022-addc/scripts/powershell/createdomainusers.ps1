@@ -35,17 +35,14 @@ $Users = @(
     }
 )
 
-$Users | foreach { 
-    if (Get-ADUser $_.Name)
-    {
-        $Name = $_.Name
-        Write-Output "Active Directory Domain User already exists: $Name" 
-    }
-    else
-    {
-        New-ADUser @_ 
+function Initialize-Users {
+    $Users | foreach { 
+        New-ADUser @_
     }
 }
 
-# PS> Add-ADGroupMember -Identity Officers -Members dallas, kane
-# PS> Add-ADGroupMember -Identity Engineers -Members parker
+try {
+    $Users | foreach { Get-ADUser $_.Name }
+} catch {
+    Initialize-Users
+}

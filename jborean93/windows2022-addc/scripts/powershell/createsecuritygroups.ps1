@@ -3,32 +3,28 @@ $SecurityGroups = @(
         Name = "Officers"
         SamAccountName = "Officers"
         GroupCategory = "Security"
-        GroupScope = "DomainLocal"
+        GroupScope = "Global"
         DisplayName = "Bridge Officers"
         Description = "Members of Bridge Officers"
     }
     @{
-        Name = "Engineers" 
-        SamAccountName = "Engineers" 
-        GroupCategory = "Security" 
-        GroupScope = "DomainLocal" 
+        Name = "Engineers"
+        SamAccountName = "Engineers"
+        GroupCategory = "Security"
+        GroupScope = "Global"
         DisplayName = "Engineering Crew"
         Description = "Members of Engineering Crew"
     }
 )
 
-$SecurityGroups | foreach { 
-    if (Get-ADGroup $_.Name)
-    {
-        $Name = $_.Name
-        Write-Output "Active Directory Security Group already exists: $Name"  
-    }
-    else
-    {
-        New-ADGroup @_ 
+function Initialize-Groups {
+    $SecurityGroups | foreach { 
+        New-ADGroup @_
     }
 }
 
-# If we start to structure using OUs include the Path
-# Path = "CN=Users,DC=Nostromo,DC=Com"
-# Path = "CN=Users,DC=Nostromo,DC=Com"
+try {
+    $SecurityGroups | foreach { Get-ADGroup $_.Name }
+} catch {
+    Initialize-Groups
+}
