@@ -1,0 +1,24 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define :alpha do |alpha|
+    alpha.vm.box = "fedora/41-cloud-base"
+    alpha.vm.hostname = "alpha"
+    alpha.vm.network "private_network", ip: "10.0.0.20", :libvirt__domain_name => "alpha.local"
+  end
+
+  config.vm.define :beta do |beta|
+    beta.vm.box = "fedora/41-cloud-base"
+    beta.vm.hostname = "beta"
+    beta.vm.network "private_network", ip: "10.0.0.21", :libvirt__domain_name => "beta.local"
+  end
+
+end
+
+# DONE: Figure out how to unfuck https://vagrant-libvirt.github.io/vagrant-libvirt/configuration.html#networks
+# https://wiki.libvirt.org/VirtualNetworking.html
+# Using the bundled libvirt, with the upstream Hashicorp Vagrant release and 
+# plugin seems like the most stable option in terms of moderately advanced
+# networking.
