@@ -3,30 +3,29 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.define :alpha do |alpha|
-    alpha.vm.box = "jborean93/WindowsServer2022"
-    alpha.vm.hostname = "alpha"
-    alpha.vm.network "private_network", ip: "10.0.0.10"
-    # alpha.vm.network "private_network", ip: "10.0.0.10", :libvirt__domain_name => "alpha.local"
-    # alpha.vm.provision "shell", 
-    #   name: "Active Directory Domain Controller Setup",
-    #   path: "./scripts/powershell/createdomaincontroller.ps1",
-    #   reboot: "true"
-    # alpha.vm.provision "shell",
-    #   name: "Create Active Directory Security Groups",
-    #   path: "./scripts/powershell/createsecuritygroups.ps1"
-    # alpha.vm.provision "shell",
-    #   name: "Create Active Directory Domain Users",
-    #   path: "./scripts/powershell/createdomainusers.ps1"
-    # alpha.vm.provision "shell",
-    #   name: "Allocate Users to Security Groups",
-    #   path: "./scripts/powershell/allocategroupmembership.ps1"  
+  config.vm.define :win01 do |win01|
+    win01.vm.box = "jborean93/WindowsServer2022"
+    win01.vm.hostname = "win01"
+    win01.vm.network "private_network", ip: "10.0.0.10"
+    win01.vm.provision "shell", 
+      name: "Active Directory Domain Controller Setup",
+      path: "./scripts/powershell/createdomaincontroller.ps1",
+      reboot: "true"
+    win01.vm.provision "shell",
+      name: "Create Active Directory Security Groups",
+      path: "./scripts/powershell/createsecuritygroups.ps1"
+    win01.vm.provision "shell",
+      name: "Create Active Directory Domain Users",
+      path: "./scripts/powershell/createdomainusers.ps1"
+    win01.vm.provision "shell",
+      name: "Allocate Users to Security Groups",
+      path: "./scripts/powershell/allocategroupmembership.ps1"  
   end
 
-  config.vm.define :beta do |beta|
-    beta.vm.box = "fedora/41-cloud-base"
-    beta.vm.hostname = "beta"
-    beta.vm.network "private_network", ip: "10.0.0.20", :libvirt__domain_name => "beta.local"
+  config.vm.define :lnx01 do |lnx01|
+    lnx01.vm.box = "fedora/41-cloud-base"
+    lnx01.vm.hostname = "lnx01"
+    lnx01.vm.network "private_network", ip: "10.0.0.20"
   end
 
 end

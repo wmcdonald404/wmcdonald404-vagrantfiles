@@ -9,14 +9,14 @@ function Initialize-Domain {
 
     # Set our domain/subdomain.
     # Vagrant will assign a pseudo-random hostname, e.g.: WIN-A621GKNALNJ
-    # $Env:COMPUTERNAME.Split('-')[0].ToUpper() will return 'WIN' for the NetBIOS domain name
-    # $Env:COMPUTERNAME.Replace("-",".") will return WIN.A621GKNALNJ for the AD domain name.
+    # [Environment]::MachineName.Replace("-",".") will return 'WIN' for the NetBIOS domain name
+    # [Environment]::MachineName.Replace("-",".") will return WIN.A621GKNALNJ for the AD domain name.
     $Params = @{
         CreateDnsDelegation = $false
         DatabasePath = 'C:\Windows\NTDS'
         DomainMode = 'WinThreshold'
-        DomainName = [Environment]::MachineName.Replace("-",".")
-        DomainNetbiosName = [Environment]::MachineName.Split('-')[0].ToUpper()
+        DomainName = 'nostromo.com'
+        DomainNetbiosName = 'NOSTROMO'
         Force = $true
         ForestMode = 'WinThreshold'
         InstallDns = $true
