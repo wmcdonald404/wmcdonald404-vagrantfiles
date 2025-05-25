@@ -31,9 +31,10 @@ Vagrant.configure("2") do |config|
     lnx01.vm.hostname = "lnx01"
     lnx01.vm.network "private_network", ip: "10.0.0.20"
     lnx01.vm.provision "shell",
-      name: "Install Base Software",
+      name: "Disable IPv6 | Install Base Software",
       path: "./scripts/shell/installbasesoftware.sh"
   end
+  
 
 end
 
