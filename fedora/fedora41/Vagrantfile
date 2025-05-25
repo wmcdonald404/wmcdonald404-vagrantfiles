@@ -4,4 +4,11 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "fedora/41-cloud-base"
   config.vm.box_version = "41-20241024.0"
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.machine_virtual_size = 10
+  end
+  config.vm.provision "shell", name: "Grow root filesystem", inline: <<-SHELL
+    growpart /dev/vda 4
+    btrfs filesystem resize max / 2> /dev/null
+  SHELL
 end
