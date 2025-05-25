@@ -30,13 +30,9 @@ Vagrant.configure("2") do |config|
     lnx01.vm.box = "fedora/41-cloud-base"
     lnx01.vm.hostname = "lnx01"
     lnx01.vm.network "private_network", ip: "10.0.0.20"
-    lnx01.vm.provision "shell", inline: <<-SHELL
-      dnf -yq install nss-mdns avahi-tools
-      systemctl enable --now avahi-daemon.service
-      sysctl -w net.ipv6.conf.all.disable_ipv6=1 >> /etc/sysctl.conf
-      sysctl -w net.ipv6.conf.default.disable_ipv6=1 >> /etc/sysctl.conf
-      # sysctl -p
-    SHELL
+    lnx01.vm.provision "shell",
+      name: "Install Base Software",
+      path: "./scripts/shell/installbasesoftware.sh"
   end
 
 end
@@ -46,3 +42,11 @@ end
 # Using the bundled libvirt, with the upstream Hashicorp Vagrant release and 
 # plugin seems like the most stable option in terms of moderately advanced
 # networking.
+
+# lnx01.vm.provision "shell", inline: <<-SHELL
+#   dnf -yq install nss-mdns avahi-tools
+#   systemctl enable --now avahi-daemon.service
+#   sysctl -w net.ipv6.conf.all.disable_ipv6=1 >> /etc/sysctl.conf
+#   sysctl -w net.ipv6.conf.default.disable_ipv6=1 >> /etc/sysctl.conf
+#   # sysctl -p
+# SHELL
