@@ -21,8 +21,10 @@ Some simple starter Vagrantfiles, mostly targeting the libvirt provider.
 │   └── ubuntu-22.04                    # Ubuntu 22.04
 └── jborean93                       # Windows Vagrantfiles
     ├── windows2022                     # Windows 2022, single VM
+    ├── windows2022-addc                # Windows 2022, quick AD DC
     ├── windows2022-multidisk           # Windows 2022, single VM, multiple block devices
-    └── windows2022-multivm             # Windows 2022, multi VM
+    ├── windows2022-multivm             # Windows 2022, multi VM
+    └── windows2022-rdp                 # Windows 2022, multi VM
 ```
 
 
